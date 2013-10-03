@@ -1,5 +1,6 @@
 README
 Changes
+LICENSE
 MANIFEST
 Makefile.PL
 lib/HTML/TableExtract.pm
