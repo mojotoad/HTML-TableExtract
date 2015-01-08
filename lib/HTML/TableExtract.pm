@@ -977,7 +977,7 @@ sub _emsg {
     if ($self->{headers}) {
       # First we order the original column counts by taking a hash slice
       # based on the original header order. The resulting original
-      # column numbers are mapped to the actual content indicies since
+      # column numbers are mapped to the actual content indices since
       # we could have a sparse slice.
       my %order;
       foreach (keys %{$self->{hits}}) {
@@ -1154,7 +1154,7 @@ sub _emsg {
       $current_row->[$col] = [$rspan, $cspan];
       $col_spinner[$col] = $rspan - 1;
 
-      # if this is an embedded placment (not a trailing element), use up
+      # if this is an embedded placement (not a trailing element), use up
       # the cspan
       if ($col < $#$current_row) {
         my $offset = 1;
@@ -1372,7 +1372,7 @@ starting with 0. Providing both a I<depth> and a I<count> will
 uniquely specify a table within a document.
 
 I<Attributes> match based on the attributes of the html E<lt>tableE<gt>
-tag, for example, boder widths or background color.
+tag, for example, border widths or background color.
 
 Each of the I<Headers>, I<Depth>, I<Count>, and I<Attributes>
 specifications are cumulative in their effect on the overall extraction.
@@ -1402,10 +1402,10 @@ another. In this case, HTML::TableExtract is a subclass of HTML::Parser:
 
   use HTML::TableExtract;
 
-Alternativevly, tables can be extracted as HTML::ElementTable
+Alternatively, tables can be extracted as HTML::ElementTable
 structures, which are in turn embedded in an HTML::Element tree
 representing the entire HTML document. Embedded tables are not decoupled
-from one another since this tree structure must be manitained. In this
+from one another since this tree structure must be maintained. In this
 case, HTML::TableExtract is a subclass of HTML::TreeBuilder (itself a
 subclass of HTML:::Parser):
 
@@ -1513,7 +1513,7 @@ matching header above them. Disabling this also disables C<automap>.
 Disabled by default, and only applicable when header constraints have
 been specified, C<keep_headers> will retain the matching header row as
 the first row of table data when enabled. This option has no effect if
-extracting into an element tree tructure. In any case, the header row is
+extracting into an element tree structure. In any case, the header row is
 accessible from the table method C<hrow()>.
 
 =item gridmap
