@@ -3,6 +3,8 @@ Changes
 LICENSE
 MANIFEST
 Makefile.PL
+META.json
+META.yml
 lib/HTML/TableExtract.pm
 t/00_basic.t
 t/01_pod.t

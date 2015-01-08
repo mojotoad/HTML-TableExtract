@@ -887,7 +887,6 @@ sub _emsg {
     my $r = shift;
     $r <= $#{$self->{grid}}
       or croak "row $r out of range ($#{$self->{grid}})\n";
-    my @ri = $self->row_indices;
     my @row = $self->_slice_and_normalize_row(
                 $self->{grid}[($self->row_indices)[$r]]
               );
