@@ -118,9 +118,8 @@ sub start {
     my $ts = $self->_enter_table(@_);
     $ts->tree($res[0]) if @res;
   }
-
-  # Rows and cells are next.
-  if ($self->{_in_a_table}) {
+  elsif ($self->{_in_a_table}) {
+    # Rows and cells are next.
     my $ts = $self->current_table;
     if ($_[0] eq 'tr') {
       $ts->_enter_row;
@@ -133,14 +132,16 @@ sub start {
       $ts->_rasterizer->($ts->row_count, $rspan, $cspan);
       $ts->_anchor_item(@res);
     }
-    elsif (!TREE() && $self->{keep_html}) {
-      $self->text($_[3]);
+    elsif (! TREE() && $ts->{in_cell}) {
+      if ($self->{keep_html}) {
+        # capture full text of tag
+        $self->text($_[3]);
+      }
+      elsif ($_[0] eq 'br' && $self->{br_translate}) {
+        # Replace <br> with newlines if requested
+        $self->text("\n");
+      }
     }
-  }
-
-  # Replace <br> with newlines if requested
-  if ($_[0] eq 'br' && $self->{br_translate} && !$self->{keep_html}) {
-    $self->text("\n");
   }
 
   @res;
@@ -148,7 +149,10 @@ sub start {
 
 sub end {
   my $self = shift;
-  my @res = $self->SUPER::end(@_) if TREE();
+  my @res;
+ 
+  @res = $self->SUPER::end(@_) if TREE();
+
   if ($self->{_in_a_table}) {
     my $ts = $self->current_table;
     if ($_[0] eq 'td' || $_[0] eq 'th') {
@@ -161,15 +165,20 @@ sub end {
       $self->_exit_table;
     }
     elsif (! TREE()) {
-      $self->text($_[1]) if $self->{keep_html} && $ts->{in_cell};
+      if ($self->{keep_html} && $ts->{in_cell}) {
+        # capture full text of tag
+        $self->text($_[1]);
+      }
     }
   }
+
   @res;
-}
+} # end end
 
 sub text {
   my $self = shift;
   my @res;
+
   if (TREE()) {
     @res = $self->SUPER::text(@_);
   }
@@ -184,8 +193,9 @@ sub text {
       }
     }
   }
+
   @res;
-}
+} # end text
 
 sub parse {
   my $self = shift;
