@@ -122,10 +122,8 @@ sub start {
   # Rows and cells are next.
   if ($self->{_in_a_table}) {
     my $ts = $self->current_table;
-    my $skiptag = 0;
     if ($_[0] eq 'tr') {
       $ts->_enter_row;
-      ++$skiptag;
     }
     elsif ($_[0] eq 'td' || $_[0] eq 'th') {
       $ts->_enter_cell(@_);
@@ -134,9 +132,8 @@ sub start {
       my $cspan = $attrs{colspan} || 1;
       $ts->_rasterizer->($ts->row_count, $rspan, $cspan);
       $ts->_anchor_item(@res);
-      ++$skiptag;
     }
-    if ($self->{keep_html} && !$skiptag) {
+    elsif (!TREE() && $self->{keep_html}) {
       $self->text($_[3]);
     }
   }
@@ -163,7 +160,7 @@ sub end {
     elsif ($_[0] eq 'table') {
       $self->_exit_table;
     }
-    unless (TREE()) {
+    elsif (! TREE()) {
       $self->text($_[1]) if $self->{keep_html} && $ts->{in_cell};
     }
   }
@@ -172,15 +169,19 @@ sub end {
 
 sub text {
   my $self = shift;
-  my @res = $self->SUPER::text(@_) if TREE();
-  if ($self->{_in_a_table} && !TREE()) {
+  my @res;
+  if (TREE()) {
+    @res = $self->SUPER::text(@_);
+  }
+  elsif ($self->{_in_a_table}) {
     my $ts = $self->current_table;
-    return unless $ts->{in_cell};
-    if ($self->{decode} && !$self->{keep_html}) {
-      $ts->_add_text(decode_entities($_[0]));
-    }
-    else {
-      $ts->_add_text($_[0]);
+    if ($ts->{in_cell}) {
+      if ($self->{decode} && !$self->{keep_html}) {
+        $ts->_add_text(decode_entities($_[0]));
+      }
+      else {
+        $ts->_add_text($_[0]);
+      }
     }
   }
   @res;
