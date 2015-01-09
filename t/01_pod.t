@@ -1,7 +1,7 @@
 use Test::More;
 my $msg;
-if (! $ENV{HTE_DEVEL}) {
-  $msg = "Developer only";
+if (! $ENV{HTE_DEV_TESTS}) {
+  $msg = "(dev only)";
 }
 else {
   eval "use Test::Pod 1.00";
