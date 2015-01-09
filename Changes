@@ -1,5 +1,9 @@
 Revision history for HTML::TableExtract
 
+2.12  Fri Jan  9 11:29:08 EST 2015
+        - tightened up logic pertaining to tree mode and keep_html
+        - documentation fixes
+
 2.11  Tue Aug 23 16:01:04 EDT 2011
         - added parsing context, override for eof() and parse() for
           memory clear on new docs or post-eof()
