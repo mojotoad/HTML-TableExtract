@@ -3,6 +3,7 @@ Changes
 LICENSE
 MANIFEST
 Makefile.PL
+examples.html
 META.json
 META.yml
 lib/HTML/TableExtract.pm
