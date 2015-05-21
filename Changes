@@ -1,5 +1,8 @@
 Revision history for HTML::TableExtract
 
+2.14  Thu May 21 12:20:46 EDT 2015
+        - bundled examples html page
+
 2.12  Fri Jan  9 11:29:08 EST 2015
         - tightened up logic pertaining to tree mode and keep_html
         - documentation fixes
