@@ -12,7 +12,7 @@ use Carp;
 
 use vars qw($VERSION @ISA);
 
-$VERSION = '2.14';
+$VERSION = '2.15';
 
 use HTML::Parser;
 @ISA = qw(HTML::Parser);
